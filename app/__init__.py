@@ -7,7 +7,7 @@ db = SQLAlchemy()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
 login_manager.login_view = 'login'
-login_manager.login_message_category = 'info'
+login_manager.login_view = 'auth.login'
 
 def create_app():
     app = Flask(__name__)
@@ -18,10 +18,11 @@ def create_app():
     login_manager.init_app(app)
 
     # Import routes and models only after the app and extensions have been initialized
-    from app.routes import main
-    from app.models import User  # Now importing after initializing db
-    
-    app.register_blueprint(main)
+    from app.routes import main as main_blueprint
+    app.register_blueprint(main_blueprint)
+
+    from app.auth import auth as auth_blueprint
+    app.register_blueprint(auth_blueprint)
 
     return app
 
