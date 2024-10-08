@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Home - TorqueX{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1 class="display-4" style="font-family: 'Dancing Script', cursive;">Welcome to TorqueX</h1>
+    <p class="lead">Your one-stop platform for buying new cars and selling old ones.</p>
+    <hr class="my-4">
+    <p>Browse through our collection of new and used cars, or sign up to sell your vehicle today.</p>
+    <a class="btn btn-primary btn-lg" href="{{ url_for('main.car_list') }}" role="button">Browse Cars</a>
+</div>
+
+<!-- Featured Cars Section -->
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/car1.jpg') }}" class="card-img-top" alt="Car 1">
+            <div class="card-body">
+                <h5 class="card-title">2024 Tesla Model S</h5>
+                <p class="card-text">Luxury electric sedan with advanced features and a long range.</p>
+                <a href="#" class="btn btn-primary">View Details</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/car2.jpg') }}" class="card-img-top" alt="Car 2">
+            <div class="card-body">
+                <h5 class="card-title">2023 Ford Mustang</h5>
+                <p class="card-text">Classic American muscle car with a modern twist.</p>
+                <a href="#" class="btn btn-primary">View Details</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/car3.jpg') }}" class="card-img-top" alt="Car 3">
+            <div class="card-body">
+                <h5 class="card-title">2022 BMW X5</h5>
+                <p class="card-text">Luxurious SUV with premium features and top performance.</p>
+                <a href="#" class="btn btn-primary">View Details</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
