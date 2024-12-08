@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">Car Listings</h1>
+    <div class="row">
+        {% if cars %}
+            {% for car in cars %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ car.make }} {{ car.model }}</h5>
+                            <p class="card-text"><strong>Year:</strong> {{ car.year }}</p>
+                            <p class="card-text"><strong>Make:</strong> {{ car.make }}</p>
+                            <p class="card-text"><strong>Model:</strong> {{ car.model }}</p>
+                            <p class="card-text"><strong>Type:</strong> {{ car.type }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No cars found.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

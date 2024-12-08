@@ -7,8 +7,8 @@ from app.forms import RegistrationForm, LoginForm
 auth = Blueprint('auth', __name__)
 
 # Registration route
-@auth.route('/register', methods=['GET', 'POST'])
-def register():
+@auth.route('/signup', methods=['GET', 'POST'])
+def signup():
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
     form = RegistrationForm()
@@ -19,7 +19,7 @@ def register():
         db.session.commit()
         flash('Your account has been created! You can now log in.', 'success')
         return redirect(url_for('auth.login'))
-    return render_template('register.html', title='Register', form=form)
+    return render_template('signup.html', title='Register', form=form)
 
 # Login route
 @auth.route('/login', methods=['GET', 'POST'])

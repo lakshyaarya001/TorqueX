@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, url_for, flash, redirect
 from app import db, bcrypt
 from app.forms import RegistrationForm, LoginForm
 from app.models import User, Car
+import requests
 
 main = Blueprint('main', __name__)
 
@@ -10,21 +11,32 @@ main = Blueprint('main', __name__)
 def home():
     return render_template('home.html')
 
-@main.route("/login", methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        # Handle login logic here
-        pass
-    return render_template('login.html', form=form)
-
-@main.route("/signup", methods=['GET', 'POST'])
-def signup():
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        # Handle signup logic here
-        pass
-    return render_template('signup.html', form=form)
+@main.route("/cars")
+def display_cars():
+    url = "https://car-data.p.rapidapi.com/cars"
+    
+    # API query parameters
+    querystring = {"limit": "30", "page": "0"}
+    
+    # API headers
+    headers = {
+        "x-rapidapi-key": "6f49b92699msh582e9b70b299e68p1028f6jsn4a593ab49eb4", 
+        "x-rapidapi-host": "car-data.p.rapidapi.com"
+    }
+    
+    # Fetch car data from the API
+    response = requests.get(url, headers=headers, params=querystring)
+    
+    print(response.status_code)  # Print HTTP status code
+    print(response.text)
+    # Parse the JSON response
+    if response.status_code == 200:
+        car_data = response.json()
+    else:
+        car_data = []
+    
+    # Pass the car data to the template
+    return render_template('display.html', cars=car_data)
 
 @main.route("/cars")
 def car_list():

@@ -1,11 +1,198 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    Home
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    /* Hero Section Styles */
+    .hero {
+        background: linear-gradient(to right, #004a99, #0066cc);
+        color: white;
+    }
+    .hero h1 {
+        font-weight: bold;
+    }
+    .hero .btn {
+        font-size: 1.25rem;
+        padding: 10px 30px;
+    }
+
+    /* Card Hover Effects */
+    .categories .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .categories .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .categories .card-img-top {
+        object-fit: cover;
+        height: 220px;
+        border-top-left-radius: .375rem;
+        border-top-right-radius: .375rem;
+    }
+
+    .categories .card-body {
+        padding: 1.5rem;
+    }
+
+    .categories .card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #007bff;
+    }
+
+    .categories .card-text {
+        color: #6c757d;
+        font-size: 1rem;
+    }
+
+    .categories .btn-primary {
+        padding: 10px 25px;
+        font-size: 1.1rem;
+    }
+
+    /* Search Section */
+    .car-search input {
+        font-size: 1.1rem;
+        padding: 10px;
+    }
+
+    .car-search .form-range {
+        width: 100%;
+    }
+
+    /* Media Queries for Responsiveness */
+    @media (max-width: 767px) {
+        .hero {
+            padding: 3rem 1rem;
+        }
+
+        .hero .btn {
+            font-size: 1.1rem;
+        }
+    }
+</style>
+
+
+    <!-- Hero Section -->
+    <section class="hero bg-primary text-white text-center py-5 mb-5">
+        <div class="container">
+            <h1 class="display-3 mb-4">Welcome to TorqueX</h1>
+            <p class="lead mb-4">Find your dream car with just a few clicks!</p>
+            <a href="{{ url_for('main.car_list') }}" class="btn btn-light btn-lg">Browse Cars</a>
+        </div>
+    </section>
+
+    <!-- Car Search and Filters -->
+    <section class="car-search py-5">
+        <div class="container">
+            <h2 class="text-center mb-4 text-dark">Find Your Perfect Car</h2>
+            <div class="row">
+                <!-- Search Bar -->
+                <div class="col-md-8">
+                    <input type="text" class="form-control" placeholder="Search for cars, brands, or models" aria-label="Search Cars">
+                </div>
+                <!-- Price Range Slider -->
+                <div class="col-md-4">
+                    <label for="price-range" class="form-label">Price Range</label>
+                    <input type="range" class="form-range" id="price-range" min="5000" max="50000" step="1000" value="5000">
+                    <small id="price-output" class="form-text text-muted">$5000</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Car Categories -->
+    <section class="categories py-5">
+        <div class="container">
+            <h2 class="text-center mb-5 text-dark">Featured Categories</h2>
+            <div class="row">
+
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card shadow-lg border-0 rounded">
+                        <img src="https://carwow-uk-wp-0.imgix.net/18015-MC20BluInfinito-scaled-e1707920217641.jpg?auto=format&cs=tinysrgb&fit=crop&h=800&ixlib=rb-1.1.0&q=60&w=1600" class="card-img-top rounded-top" alt="New Cars">
+                        <div class="card-body text-center">
+                            <h5 class="card-title text-primary">All Cars</h5>
+                            <p class="card-text text-muted">Discover all the models from the previous years till now from all the manufacturers.</p>
+                            <a href="{{ url_for('main.car_list') }}" class="btn btn-primary btn-lg">Explore</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Cars Card -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card shadow-lg border-0 rounded">
+                        <img src="https://stimg.cardekho.com/images/carexteriorimages/630x420/Mahindra-BE/6e/9263/1732689215786/front-left-side-47.jpg?imwidth=420&impolicy=resize" class="card-img-top rounded-top" alt="New Cars">
+                        <div class="card-body text-center">
+                            <h5 class="card-title text-primary">New Cars</h5>
+                            <p class="card-text text-muted">Discover the latest models from top manufacturers with cutting-edge features.</p>
+                            <a href="{{ url_for('main.car_list') }}" class="btn btn-primary btn-lg">Explore</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Used Cars Card -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card shadow-lg border-0 rounded">
+                        <img src="https://image.cnbcfm.com/api/v1/image/106889421-1622137726799-gettyimages-1233138956-AFP_9AW3FW.jpeg?v=1643896026" class="card-img-top rounded-top" alt="Used Cars">
+                        <div class="card-body text-center">
+                            <h5 class="card-title text-primary">Used Cars</h5>
+                            <p class="card-text text-muted">Find great deals on pre-owned cars, inspected and in an excellent condition.</p>
+                            <a href="{{ url_for('main.car_list') }}" class="btn btn-primary btn-lg">Explore</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUVs Card -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card shadow-lg border-0 rounded">
+                        <img src="https://stimg.cardekho.com/images/carexteriorimages/630x420/Jeep/Avenger/9314/1663069961599/front-left-side-47.jpg?imwidth=420&impolicy=resize" class="card-img-top rounded-top" alt="SUVs">
+                        <div class="card-body text-center">
+                            <h5 class="card-title text-primary">SUVs</h5>
+                            <p class="card-text text-muted">Explore a range of high-performance, family-friendly SUVs for every adventure.</p>
+                            <a href="{{ url_for('main.car_list') }}" class="btn btn-primary btn-lg">Explore</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Electric Cars Card -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card shadow-lg border-0 rounded">
+                        <img src="https://www.drivenation.ca/images/ckfinder/DRISAS_impactofelectriccars.jpg" class="card-img-top rounded-top" alt="Electric Cars">
+                        <div class="card-body text-center">
+                            <h5 class="card-title text-primary">Electric Cars</h5>
+                            <p class="card-text text-muted">Explore a new era of driving with eco-friendly electric vehicles with new technology.</p>
+                            <a href="{{ url_for('main.car_list') }}" class="btn btn-primary btn-lg">Explore</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sports Cars Card -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card shadow-lg border-0 rounded">
+                        <img src="https://imageio.forbes.com/specials-images/imageserve/6064b148afc9b47d022718d1/Hennessey-Venom-F5/960x0.jpg?height=473&width=711&fit=bounds" class="card-img-top rounded-top" alt="Sports Cars">
+                        <div class="card-body text-center">
+                            <h5 class="card-title text-primary">Sports Cars</h5>
+                            <p class="card-text text-muted">Unleash speed and performance with top-tier sports cars.</p>
+                            <a href="{{ url_for('main.car_list') }}" class="btn btn-primary btn-lg">Explore</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recommended Cars Section -->
+    <section class="recommended py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5 text-dark">Recommended Cars for You</h2>
+            <div class="row">
+                <!-- Dynamic car recommendations can go here -->
+                <!-- Add car cards dynamically as needed -->
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

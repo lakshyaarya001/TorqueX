@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center">Sign Up</h2>
+            <form method="POST" action="{{ url_for('auth.signup') }}">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    {{ form.username(class_="form-control", id="username", placeholder="Enter your username") }}
+                    {% if form.username.errors %}
+                        <small class="text-danger">{{ form.username.errors[0] }}</small>
+                    {% endif %}
+                </div>
+                <div class="form-group mt-3">
+                    <label for="email">Email</label>
+                    {{ form.email(class_="form-control", id="email", placeholder="Enter your email") }}
+                    {% if form.email.errors %}
+                        <small class="text-danger">{{ form.email.errors[0] }}</small>
+                    {% endif %}
+                </div>
+                <div class="form-group mt-3">
+                    <label for="password">Password</label>
+                    {{ form.password(class_="form-control", id="password", placeholder="Enter your password") }}
+                    {% if form.password.errors %}
+                        <small class="text-danger">{{ form.password.errors[0] }}</small>
+                    {% endif %}
+                </div>
+                <div class="form-group mt-3">
+                    <label for="confirm_password">Confirm Password</label>
+                    {{ form.confirm_password(class_="form-control", id="confirm_password", placeholder="Re-enter your password") }}
+                    {% if form.confirm_password.errors %}
+                        <small class="text-danger">{{ form.confirm_password.errors[0] }}</small>
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-primary w-100 mt-4">{{ form.submit.label }}</button>
+            </form>
+            <div class="text-center mt-3">
+                <p>Already have an account? <a href="{{ url_for('auth.login') }}">Login</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

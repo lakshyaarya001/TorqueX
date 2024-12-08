@@ -8,7 +8,7 @@ bcrypt = Bcrypt()
 login_manager = LoginManager()
 login_manager.login_view = 'login'
 login_manager.login_view = 'auth.login'
-
+    
 def create_app():
     app = Flask(__name__)
     app.config.from_object('config.Config')
@@ -25,6 +25,7 @@ def create_app():
     app.register_blueprint(auth_blueprint)
 
     return app
+
 
 @login_manager.user_loader
 def load_user(user_id):
