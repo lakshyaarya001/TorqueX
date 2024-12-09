@@ -3,7 +3,6 @@
 {% block content %}
 
 <style>
-    /* Hero Section Styles */
     .hero {
         background: linear-gradient(to right, #004a99, #0066cc);
         color: white;
@@ -16,7 +15,6 @@
         padding: 10px 30px;
     }
 
-    /* Card Hover Effects */
     .categories .card {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
@@ -53,7 +51,6 @@
         font-size: 1.1rem;
     }
 
-    /* Search Section */
     .car-search input {
         font-size: 1.1rem;
         padding: 10px;
@@ -63,7 +60,6 @@
         width: 100%;
     }
 
-    /* Media Queries for Responsiveness */
     @media (max-width: 767px) {
         .hero {
             padding: 3rem 1rem;
@@ -76,7 +72,6 @@
 </style>
 
 
-    <!-- Hero Section -->
     <section class="hero bg-primary text-white text-center py-5 mb-5">
         <div class="container">
             <h1 class="display-3 mb-4">Welcome to TorqueX</h1>
@@ -85,16 +80,13 @@
         </div>
     </section>
 
-    <!-- Car Search and Filters -->
     <section class="car-search py-5">
         <div class="container">
             <h2 class="text-center mb-4 text-dark">Find Your Perfect Car</h2>
             <div class="row">
-                <!-- Search Bar -->
                 <div class="col-md-8">
                     <input type="text" class="form-control" placeholder="Search for cars, brands, or models" aria-label="Search Cars">
                 </div>
-                <!-- Price Range Slider -->
                 <div class="col-md-4">
                     <label for="price-range" class="form-label">Price Range</label>
                     <input type="range" class="form-range" id="price-range" min="5000" max="50000" step="1000" value="5000">
@@ -104,7 +96,6 @@
         </div>
     </section>
 
-    <!-- Featured Car Categories -->
     <section class="categories py-5">
         <div class="container">
             <h2 class="text-center mb-5 text-dark">Featured Categories</h2>
@@ -121,7 +112,6 @@
                     </div>
                 </div>
 
-                <!-- New Cars Card -->
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card shadow-lg border-0 rounded">
                         <img src="https://stimg.cardekho.com/images/carexteriorimages/630x420/Mahindra-BE/6e/9263/1732689215786/front-left-side-47.jpg?imwidth=420&impolicy=resize" class="card-img-top rounded-top" alt="New Cars">
@@ -133,7 +123,6 @@
                     </div>
                 </div>
 
-                <!-- Used Cars Card -->
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card shadow-lg border-0 rounded">
                         <img src="https://image.cnbcfm.com/api/v1/image/106889421-1622137726799-gettyimages-1233138956-AFP_9AW3FW.jpeg?v=1643896026" class="card-img-top rounded-top" alt="Used Cars">
@@ -145,7 +134,6 @@
                     </div>
                 </div>
 
-                <!-- SUVs Card -->
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card shadow-lg border-0 rounded">
                         <img src="https://stimg.cardekho.com/images/carexteriorimages/630x420/Jeep/Avenger/9314/1663069961599/front-left-side-47.jpg?imwidth=420&impolicy=resize" class="card-img-top rounded-top" alt="SUVs">
@@ -157,7 +145,6 @@
                     </div>
                 </div>
 
-                <!-- Electric Cars Card -->
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card shadow-lg border-0 rounded">
                         <img src="https://www.drivenation.ca/images/ckfinder/DRISAS_impactofelectriccars.jpg" class="card-img-top rounded-top" alt="Electric Cars">
@@ -169,7 +156,6 @@
                     </div>
                 </div>
 
-                <!-- Sports Cars Card -->
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card shadow-lg border-0 rounded">
                         <img src="https://imageio.forbes.com/specials-images/imageserve/6064b148afc9b47d022718d1/Hennessey-Venom-F5/960x0.jpg?height=473&width=711&fit=bounds" class="card-img-top rounded-top" alt="Sports Cars">
@@ -184,13 +170,11 @@
         </div>
     </section>
 
-    <!-- Recommended Cars Section -->
     <section class="recommended py-5 bg-light">
         <div class="container">
             <h2 class="text-center mb-5 text-dark">Recommended Cars for You</h2>
             <div class="row">
-                <!-- Dynamic car recommendations can go here -->
-                <!-- Add car cards dynamically as needed -->
+                <a href="{{ url_for('main.car_list') }}" class="btn btn-primary btn-lg">Explore</a>
             </div>
         </div>
     </section>

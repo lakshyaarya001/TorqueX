@@ -17,7 +17,6 @@ def create_app():
     bcrypt.init_app(app)
     login_manager.init_app(app)
 
-    # Import routes and models only after the app and extensions have been initialized
     from app.routes import main as main_blueprint
     app.register_blueprint(main_blueprint)
 

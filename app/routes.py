@@ -15,32 +15,29 @@ def home():
 def display_cars():
     url = "https://car-data.p.rapidapi.com/cars"
     
-    # API query parameters
     querystring = {"limit": "30", "page": "0"}
     
-    # API headers
     headers = {
         "x-rapidapi-key": "6f49b92699msh582e9b70b299e68p1028f6jsn4a593ab49eb4", 
         "x-rapidapi-host": "car-data.p.rapidapi.com"
     }
     
-    # Fetch car data from the API
     response = requests.get(url, headers=headers, params=querystring)
     
-    print(response.status_code)  # Print HTTP status code
+    print(response.status_code)
     print(response.text)
-    # Parse the JSON response
+
     if response.status_code == 200:
         car_data = response.json()
     else:
         car_data = []
     
-    # Pass the car data to the template
+
     return render_template('display.html', cars=car_data)
 
 @main.route("/cars")
 def car_list():
-    cars = Car.query.all()  # Assuming Car is a model in models.py
+    cars = Car.query.all()  
     return render_template('car_list.html', cars=cars)
 
 @main.route("/car/<int:car_id>")

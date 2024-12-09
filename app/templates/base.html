@@ -34,7 +34,7 @@
         }
         #flash-overlay {
             width: fit-content;
-            z-index: 1050; /* Ensures it appears above other content */
+            z-index: 1050;
         }
     
         .alert {
@@ -104,9 +104,9 @@
             setTimeout(() => {
                 flashMessages.forEach(message => {
                     message.style.opacity = '0';
-                    setTimeout(() => message.remove(), 500); // Removes after fade-out
+                    setTimeout(() => message.remove(), 500);
                 });
-            }, 3000); // 3 seconds before fade starts
+            }, 3000);
         });
     </script>
     
