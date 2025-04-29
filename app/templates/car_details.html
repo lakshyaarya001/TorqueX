@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3>{{ car.brand }} {{ car.model }}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="{{ car.image_url }}" class="img-fluid rounded" alt="{{ car.brand }} {{ car.model }}">
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="text-primary">₹{{ "{:,.2f}".format(car.price) }}</h4>
+                            <table class="table">
+                                <tr>
+                                    <th>Year:</th>
+                                    <td>{{ car.year }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Mileage:</th>
+                                    <td>{{ car.mileage }} km</td>
+                                </tr>
+                                <tr>
+                                    <th>Transmission:</th>
+                                    <td>{{ car.transmission }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Owner:</th>
+                                    <td>{{ car.owner }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Fuel Type:</th>
+                                    <td>{{ car.fuel_type }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Location:</th>
+                                    <td>{{ car.location }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h5>Description</h5>
+                        <p>{{ car.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Seller Information</h5>
+                </div>
+                <div class="card-body">
+                    <h6>{{ car.seller.name }}</h6>
+                    <p>Email: {{ car.seller.email }}</p>
+                    <p>Phone: {{ car.seller.phone }}</p>
+                    <a href="mailto:{{ car.seller.email }}" class="btn btn-primary btn-block">Contact Seller</a>
+                </div>
+            </div>
+            
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5>Price Prediction</h5>
+                </div>
+                <div class="card-body">
+                    <p>Get an AI-powered price prediction for this car:</p>
+                    <a href="{{ url_for('main.predict_price') }}" class="btn btn-info btn-block">Predict Price</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

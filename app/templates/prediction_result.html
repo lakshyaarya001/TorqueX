@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">Price Prediction Result</h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-success text-center">
+                        <h4>Predicted Price</h4>
+                        <h2>₹{{ "{:,.2f}".format(predicted_price) }}</h2>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h5>Car Details</h5>
+                        <table class="table">
+                            <tr>
+                                <th>Brand:</th>
+                                <td>{{ form.brand.data }}</td>
+                            </tr>
+                            <tr>
+                                <th>Model:</th>
+                                <td>{{ form.model.data }}</td>
+                            </tr>
+                            <tr>
+                                <th>Year:</th>
+                                <td>{{ form.year.data }}</td>
+                            </tr>
+                            <tr>
+                                <th>Mileage:</th>
+                                <td>{{ form.mileage.data }} km</td>
+                            </tr>
+                            <tr>
+                                <th>Transmission:</th>
+                                <td>{{ form.transmission.data }}</td>
+                            </tr>
+                            <tr>
+                                <th>Owner:</th>
+                                <td>{{ form.owner.data }}</td>
+                            </tr>
+                            <tr>
+                                <th>Fuel Type:</th>
+                                <td>{{ form.fuel_type.data }}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <a href="{{ url_for('main.predict_price') }}" class="btn btn-primary">Make Another Prediction</a>
+                        <a href="{{ url_for('main.home') }}" class="btn btn-secondary">Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

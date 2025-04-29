@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Available Cars</h2>
+    <div class="row">
+        {% for car in car_listings %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                {% if car.image_url %}
+                <img src="{{ car.image_url }}" class="card-img-top" alt="{{ car.brand }} {{ car.model }}">
+                {% else %}
+                <div class="card-img-top bg-secondary text-white text-center py-5">
+                    No Image Available
+                </div>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ car.brand }} {{ car.model }}</h5>
+                    <p class="card-text">
+                        <strong>Year:</strong> {{ car.year }}<br>
+                        <strong>Price:</strong> ₹{{ car.price }}<br>
+                        <strong>Mileage:</strong> {{ car.mileage }} km<br>
+                        <strong>Transmission:</strong> {{ car.transmission }}<br>
+                        <strong>Owner:</strong> {{ car.owner }}<br>
+                        <strong>Fuel Type:</strong> {{ car.fuel_type }}
+                    </p>
+                    {% if car.description %}
+                    <p class="card-text">{{ car.description }}</p>
+                    {% endif %}
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Listed on {{ car.created_at.strftime('%Y-%m-%d') }}</small>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12">
+            <div class="alert alert-info">
+                No cars available at the moment.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 

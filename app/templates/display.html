@@ -1,25 +1,175 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mt-4">
-    <h1 class="text-center">Car Listings</h1>
+<style>
+    .car-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        margin-bottom: 30px;
+    }
+
+    .car-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .car-card .card-img-top {
+        height: 200px;
+        object-fit: cover;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    .car-card .card-body {
+        padding: 1.5rem;
+    }
+
+    .car-card .card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 1rem;
+    }
+
+    .car-card .card-text {
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .car-card .car-specs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 1rem;
+    }
+
+    .car-card .spec-badge {
+        background-color: #f8f9fa;
+        color: #495057;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .car-card .view-details-btn {
+        margin-top: 1rem;
+        width: 100%;
+        padding: 10px;
+        font-weight: 500;
+        border-radius: 25px;
+        background-color: #007bff;
+        border: none;
+    }
+
+    .car-card .view-details-btn:hover {
+        background-color: #0056b3;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, #007bff, #00bcd4);
+        color: white;
+        padding: 3rem 0;
+        margin-bottom: 3rem;
+        border-radius: 0 0 20px 20px;
+    }
+
+    .page-header h1 {
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .page-header p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+    .filter-section {
+        background-color: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+    }
+
+    .filter-section .form-control {
+        border-radius: 25px;
+        padding: 10px 20px;
+    }
+
+    .filter-section .btn {
+        border-radius: 25px;
+        padding: 10px 25px;
+    }
+</style>
+
+<div class="page-header text-center">
+    <div class="container">
+        <h1>Explore Our Car Collection</h1>
+        <p>Find your perfect ride from our extensive selection of vehicles</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="filter-section">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <input type="text" class="form-control" placeholder="Search by make or model...">
+            </div>
+            <div class="col-md-3 mb-3">
+                <select class="form-select">
+                    <option selected>All Types</option>
+                    <option>Sedan</option>
+                    <option>SUV</option>
+                    <option>Sports</option>
+                    <option>Luxury</option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-3">
+                <select class="form-select">
+                    <option selected>Price Range</option>
+                    <option>Under $20,000</option>
+                    <option>$20,000 - $40,000</option>
+                    <option>$40,000 - $60,000</option>
+                    <option>Over $60,000</option>
+                </select>
+            </div>
+            <div class="col-md-2 mb-3">
+                <button class="btn btn-primary w-100">Filter</button>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         {% if cars %}
             {% for car in cars %}
-                <div class="col-md-4">
-                    <div class="card mb-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="card car-card">
+                        <img src="https://source.unsplash.com/random/800x600/?{{ car.make }},{{ car.model }}" class="card-img-top" alt="{{ car.make }} {{ car.model }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ car.make }} {{ car.model }}</h5>
                             <p class="card-text"><strong>Year:</strong> {{ car.year }}</p>
-                            <p class="card-text"><strong>Make:</strong> {{ car.make }}</p>
-                            <p class="card-text"><strong>Model:</strong> {{ car.model }}</p>
                             <p class="card-text"><strong>Type:</strong> {{ car.type }}</p>
+                            
+                            <div class="car-specs">
+                                <span class="spec-badge">{{ car.type }}</span>
+                                <span class="spec-badge">{{ car.year }}</span>
+                            </div>
+                            
+                            <a href="#" class="btn btn-primary view-details-btn">View Details</a>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         {% else %}
-            <p>No cars found.</p>
+            <div class="col-12 text-center">
+                <div class="alert alert-info">
+                    <h4>No cars found</h4>
+                    <p>Please try adjusting your search criteria</p>
+                </div>
+            </div>
         {% endif %}
     </div>
 </div>

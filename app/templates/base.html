@@ -70,20 +70,28 @@
                         <a class="nav-link {% if request.endpoint == 'main.home' %}active{% endif %}" href="{{ url_for('main.home') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'car.browse' %}active{% endif %}" href="{{ url_for('main.car_list') }}">Browse Cars</a>
+                        <a class="nav-link {% if request.endpoint == 'car.browse' %}active{% endif %}" href="{{ url_for('main.display_cars') }}">Browse Cars</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'main.predict_price' %}active{% endif %}" href="{{ url_for('main.predict_price') }}">Predict Price</a>
+                    </li>
+                    {% if current_user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'main.dashboard' %}active{% endif %}" href="{{ url_for('main.dashboard') }}">Dashboard</a>
+                    </li>
+                    {% endif %}
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     {% if current_user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
+                            <a class="nav-link" href="{{ url_for('main.logout') }}">Logout</a>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+                            <a class="nav-link" href="{{ url_for('main.login') }}">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('auth.signup') }}">Sign Up</a>
+                            <a class="nav-link" href="{{ url_for('main.register') }}">Sign Up</a>
                         </li>
                     {% endif %}
                 </ul>
