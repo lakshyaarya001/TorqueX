@@ -11,20 +11,16 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
-    # Initialize extensions
     db.init_app(app)
     login_manager.init_app(app)
     bcrypt.init_app(app)
 
-    # Set login view
     login_manager.login_view = 'main.login'
     login_manager.login_message_category = 'info'
 
-    # Register blueprints
     from app.routes import main
     app.register_blueprint(main)
 
-    # Create database tables
     with app.app_context():
         db.create_all()
 
