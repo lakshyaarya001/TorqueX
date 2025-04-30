@@ -3,6 +3,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from app import db, bcrypt
 from app.forms import RegistrationForm, LoginForm, CarListingForm, PricePredictionForm
 from app.models import User, CarListing, PricePrediction
+from app.car_data import df, brands, get_models_for_brand
 import requests
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
@@ -10,11 +11,6 @@ import joblib
 import os
 
 main = Blueprint('main', __name__)
-
-# Load the car dataset
-df = pd.read_csv('cleaned_car.csv')
-brands = sorted(df['Brand'].unique())
-models = sorted(df['model'].unique())
 
 # Load or train the price prediction model
 model_path = 'car_price_model.joblib'
@@ -61,7 +57,7 @@ def display_cars():
 @main.route("/car/<int:car_id>")
 def car_detail(car_id):
     car = CarListing.query.get_or_404(car_id)
-    return render_template('car_detail.html', car=car)
+    return render_template('car_details.html', car=car)
 
 @main.route('/register', methods=['GET', 'POST'])
 def register():
@@ -114,9 +110,15 @@ def list_car():
         return redirect(url_for('main.dashboard'))
     
     form = CarListingForm()
-    form.brand.choices = [(brand, brand) for brand in brands]
     
     if form.validate_on_submit():
+        # Validate model against brand
+        from app.car_data import get_models_for_brand
+        valid_models = get_models_for_brand(form.brand.data)
+        if form.model.data not in valid_models:
+            flash('Please select a valid model for the chosen brand', 'danger')
+            return render_template('list_car.html', title='List Car', form=form)
+        
         car = CarListing(
             brand=form.brand.data,
             model=form.model.data,
@@ -141,7 +143,7 @@ def list_car():
 def predict_price():
     form = PricePredictionForm()
     form.brand.choices = [(brand, brand) for brand in brands]
-    form.model.choices = [(model, model) for model in models]
+    form.model.choices = [(model, model) for model in get_models_for_brand(form.brand.data)]
     
     if form.validate_on_submit():
         # Prepare input data for prediction
@@ -209,7 +211,7 @@ def predict_price():
 @main.route('/get_models/<brand>')
 def get_models(brand):
     # Filter models for the selected brand
-    models = sorted(df[df['Brand'] == brand]['model'].unique())
+    models = get_models_for_brand(brand)
     return jsonify(models)
 
 @main.route('/mark_sold/<int:car_id>', methods=['POST'])

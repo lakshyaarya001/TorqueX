@@ -1,16 +1,91 @@
 {% extends "base.html" %}
 {% block content %}
+<style>
+    .car-details-card {
+        background: rgba(26, 26, 26, 0.8);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(212, 175, 55, 0.1);
+    }
+
+    .car-details-card .card-header {
+        background: rgba(26, 26, 26, 0.9);
+        border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    }
+
+    .car-details-card .card-header h3 {
+        color: var(--secondary-color);
+        font-size: 2rem;
+        margin: 0;
+    }
+
+    .car-details-card .card-body {
+        color: #e0e0e0;
+    }
+
+    .car-details-card .text-primary {
+        color: var(--secondary-color) !important;
+        font-size: 2rem;
+        font-weight: 700;
+    }
+
+    .car-details-card .table {
+        color: #e0e0e0;
+        background: transparent;
+    }
+
+    .car-details-card .table th {
+        color: var(--secondary-color);
+        border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        padding: 1rem;
+        background: transparent;
+    }
+
+    .car-details-card .table td {
+        color: #e0e0e0;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        padding: 1rem;
+        background: transparent;
+    }
+
+    .car-details-card .table tr:hover {
+        background: rgba(212, 175, 55, 0.05);
+    }
+
+    .car-details-card .table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .car-details-card .btn-primary {
+        background: linear-gradient(135deg, var(--secondary-color), #c19b2e);
+        border: none;
+        color: var(--primary-color);
+        font-weight: 600;
+        padding: 1rem 2rem;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .car-details-card .btn-primary:hover {
+        background: linear-gradient(135deg, #c19b2e, var(--secondary-color));
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+    }
+</style>
+
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-8">
-            <div class="card">
+            <div class="car-details-card card">
                 <div class="card-header">
                     <h3>{{ car.brand }} {{ car.model }}</h3>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <img src="{{ car.image_url }}" class="img-fluid rounded" alt="{{ car.brand }} {{ car.model }}">
+                            <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="img-fluid rounded" alt="{{ car.brand }} {{ car.model }}">
                         </div>
                         <div class="col-md-6">
                             <h4 class="text-primary">₹{{ "{:,.2f}".format(car.price) }}</h4>
@@ -35,16 +110,12 @@
                                     <th>Fuel Type:</th>
                                     <td>{{ car.fuel_type }}</td>
                                 </tr>
-                                <tr>
-                                    <th>Location:</th>
-                                    <td>{{ car.location }}</td>
-                                </tr>
                             </table>
                         </div>
                     </div>
                     
                     <div class="mt-4">
-                        <h5>Description</h5>
+                        <h5 style="color: var(--secondary-color);">Description</h5>
                         <p>{{ car.description }}</p>
                     </div>
                 </div>
@@ -52,25 +123,25 @@
         </div>
         
         <div class="col-md-4">
-            <div class="card">
+            <div class="car-details-card card mb-3">
                 <div class="card-header">
-                    <h5>Seller Information</h5>
+                    <h5 style="color: var(--secondary-color);">Seller Information</h5>
                 </div>
                 <div class="card-body">
-                    <h6>{{ car.seller.name }}</h6>
-                    <p>Email: {{ car.seller.email }}</p>
-                    <p>Phone: {{ car.seller.phone }}</p>
+                    <h6 style="color: #e0e0e0;">{{ car.seller.name }}</h6>
+                    <p style="color: #e0e0e0;">Email: {{ car.seller.email }}</p>
+                    <p style="color: #e0e0e0;">Phone: {{ car.seller.phone }}</p>
                     <a href="mailto:{{ car.seller.email }}" class="btn btn-primary btn-block">Contact Seller</a>
                 </div>
             </div>
             
-            <div class="card mt-3">
+            <div class="car-details-card card">
                 <div class="card-header">
-                    <h5>Price Prediction</h5>
+                    <h5 style="color: var(--secondary-color);">Price Prediction</h5>
                 </div>
                 <div class="card-body">
-                    <p>Get an AI-powered price prediction for this car:</p>
-                    <a href="{{ url_for('main.predict_price') }}" class="btn btn-info btn-block">Predict Price</a>
+                    <p style="color: #e0e0e0;">Get an AI-powered price prediction for this car:</p>
+                    <a href="{{ url_for('main.predict_price') }}" class="btn btn-primary btn-block">Predict Price</a>
                 </div>
             </div>
         </div>

@@ -3,180 +3,320 @@
 {% block content %}
 
 <style>
-    .hero {
-        background: linear-gradient(to right, #004a99, #0066cc);
+    .hero-section {
         color: white;
-    }
-    .hero h1 {
-        font-weight: bold;
-    }
-    .hero .btn {
-        font-size: 1.25rem;
-        padding: 10px 30px;
+        padding: 5rem 0;
+        margin-bottom: 3rem;
+        position: relative;
+        overflow: hidden;
     }
 
-    .categories .card {
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .search-section {
+        background: rgba(26, 26, 26, 0.8);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(212, 175, 55, 0.1);
+    }
+
+    .category-card {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        margin-bottom: 30px;
+        background: rgba(26, 26, 26, 0.8);
+        border: 1px solid rgba(212, 175, 55, 0.1);
     }
 
-    .categories .card:hover {
+    .category-card:hover {
         transform: translateY(-10px);
-        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
     }
 
-    .categories .card-img-top {
+    .category-card img {
+        height: 200px;
         object-fit: cover;
-        height: 220px;
-        border-top-left-radius: .375rem;
-        border-top-right-radius: .375rem;
+        transition: transform 0.3s ease;
     }
 
-    .categories .card-body {
+    .category-card:hover img {
+        transform: scale(1.05);
+    }
+
+    .category-card .card-body {
         padding: 1.5rem;
     }
 
-    .categories .card-title {
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: #007bff;
+    .category-card .card-title {
+        color: var(--secondary-color);
     }
 
-    .categories .card-text {
-        color: #6c757d;
-        font-size: 1rem;
+    .category-card .card-text {
+        color: #b3b3b3;
     }
 
-    .categories .btn-primary {
-        padding: 10px 25px;
-        font-size: 1.1rem;
+    .featured-cars {
+        background: rgba(26, 26, 26, 0.8);
+        padding: 4rem 0;
+        backdrop-filter: blur(10px);
     }
 
-    .car-search input {
-        font-size: 1.1rem;
-        padding: 10px;
+    .car-card {
+        transition: transform 0.3s ease;
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        margin-bottom: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        background: rgba(26, 26, 26, 0.8);
+        border: 1px solid rgba(212, 175, 55, 0.1);
     }
 
-    .car-search .form-range {
-        width: 100%;
+    .car-card:hover {
+        transform: translateY(-5px);
     }
 
-    @media (max-width: 767px) {
-        .hero {
-            padding: 3rem 1rem;
-        }
+    .car-card img {
+        height: 200px;
+        object-fit: cover;
+    }
 
-        .hero .btn {
-            font-size: 1.1rem;
-        }
+    .car-card .card-title {
+        color: var(--secondary-color);
+    }
+
+    .car-card .card-text {
+        color: #b3b3b3;
+    }
+
+    .stats-section {
+        background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(44, 62, 80, 0.95));
+        color: white;
+        padding: 4rem 0;
+        backdrop-filter: blur(10px);
+    }
+
+    .stat-item {
+        text-align: center;
+        padding: 2rem;
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: var(--secondary-color);
+    }
+
+    .stat-label {
+        color: #b3b3b3;
+    }
+
+    .testimonials {
+        padding: 4rem 0;
+        background: rgba(26, 26, 26, 0.8);
+        backdrop-filter: blur(10px);
+    }
+
+    .testimonial-card {
+        background: rgba(26, 26, 26, 0.8);
+        border-radius: 15px;
+        padding: 2rem;
+        margin: 1rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(212, 175, 55, 0.1);
+    }
+
+    .testimonial-card h5 {
+        color: var(--secondary-color);
+    }
+
+    .testimonial-card p {
+        color: #b3b3b3;
+    }
+
+    .testimonial-image {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 1rem;
     }
 </style>
 
-
-    <section class="hero bg-primary text-white text-center py-5 mb-5">
-        <div class="container">
-            <h1 class="display-3 mb-4">Welcome to TorqueX</h1>
-            <p class="lead mb-4">Find your dream car with just a few clicks!</p>
-            <a href="{{ url_for('main.display_cars') }}" class="btn btn-light btn-lg">Browse Cars</a>
-        </div>
-    </section>
-
-    <section class="car-search py-5">
-        <div class="container">
-            <h2 class="text-center mb-4 text-dark">Find Your Perfect Car</h2>
-            <div class="row">
-                <div class="col-md-8">
-                    <input type="text" class="form-control" placeholder="Search for cars, brands, or models" aria-label="Search Cars">
-                </div>
-                <div class="col-md-4">
-                    <label for="price-range" class="form-label">Price Range</label>
-                    <input type="range" class="form-range" id="price-range" min="5000" max="50000" step="1000" value="5000">
-                    <small id="price-output" class="form-text text-muted">$5000</small>
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 hero-content">
+                <h1 class="display-4 fw-bold mb-4">Welcome to TorqueX</h1>
+                <p class="lead mb-4">Your trusted platform for buying and selling cars. Find your perfect ride or list your car with confidence.</p>
+                <div class="d-flex gap-3">
+                    <a href="{{ url_for('main.display_cars') }}" class="btn btn-primary btn-lg">Browse Cars</a>
+                    {% if current_user.is_authenticated and current_user.is_seller %}
+                    <a href="{{ url_for('main.list_car') }}" class="btn btn-outline-light btn-lg">List Your Car</a>
+                    {% elif not current_user.is_authenticated %}
+                    <a href="{{ url_for('main.register') }}" class="btn btn-outline-light btn-lg">Join Now</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section class="categories py-5">
-        <div class="container">
-            <h2 class="text-center mb-5 text-dark">Featured Categories</h2>
-            <div class="row">
-
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card shadow-lg border-0 rounded">
-                        <img src="https://carwow-uk-wp-0.imgix.net/18015-MC20BluInfinito-scaled-e1707920217641.jpg?auto=format&cs=tinysrgb&fit=crop&h=800&ixlib=rb-1.1.0&q=60&w=1600" class="card-img-top rounded-top" alt="New Cars">
-                        <div class="card-body text-center">
-                            <h5 class="card-title text-primary">All Cars</h5>
-                            <p class="card-text text-muted">Discover all the models from the previous years till now from all the manufacturers.</p>
-                            <a href="{{ url_for('main.display_cars') }}" class="btn btn-primary btn-lg">Explore</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card shadow-lg border-0 rounded">
-                        <img src="https://stimg.cardekho.com/images/carexteriorimages/630x420/Mahindra-BE/6e/9263/1732689215786/front-left-side-47.jpg?imwidth=420&impolicy=resize" class="card-img-top rounded-top" alt="New Cars">
-                        <div class="card-body text-center">
-                            <h5 class="card-title text-primary">New Cars</h5>
-                            <p class="card-text text-muted">Discover the latest models from top manufacturers with cutting-edge features.</p>
-                            <a href="{{ url_for('main.display_cars') }}" class="btn btn-primary btn-lg">Explore</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card shadow-lg border-0 rounded">
-                        <img src="https://image.cnbcfm.com/api/v1/image/106889421-1622137726799-gettyimages-1233138956-AFP_9AW3FW.jpeg?v=1643896026" class="card-img-top rounded-top" alt="Used Cars">
-                        <div class="card-body text-center">
-                            <h5 class="card-title text-primary">Used Cars</h5>
-                            <p class="card-text text-muted">Find great deals on pre-owned cars, inspected and in an excellent condition.</p>
-                            <a href="{{ url_for('main.display_cars') }}" class="btn btn-primary btn-lg">Explore</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card shadow-lg border-0 rounded">
-                        <img src="https://stimg.cardekho.com/images/carexteriorimages/630x420/Jeep/Avenger/9314/1663069961599/front-left-side-47.jpg?imwidth=420&impolicy=resize" class="card-img-top rounded-top" alt="SUVs">
-                        <div class="card-body text-center">
-                            <h5 class="card-title text-primary">SUVs</h5>
-                            <p class="card-text text-muted">Explore a range of high-performance, family-friendly SUVs for every adventure.</p>
-                            <a href="{{ url_for('main.display_cars') }}" class="btn btn-primary btn-lg">Explore</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card shadow-lg border-0 rounded">
-                        <img src="https://www.drivenation.ca/images/ckfinder/DRISAS_impactofelectriccars.jpg" class="card-img-top rounded-top" alt="Electric Cars">
-                        <div class="card-body text-center">
-                            <h5 class="card-title text-primary">Electric Cars</h5>
-                            <p class="card-text text-muted">Explore a new era of driving with eco-friendly electric vehicles with new technology.</p>
-                            <a href="{{ url_for('main.display_cars') }}" class="btn btn-primary btn-lg">Explore</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card shadow-lg border-0 rounded">
-                        <img src="https://imageio.forbes.com/specials-images/imageserve/6064b148afc9b47d022718d1/Hennessey-Venom-F5/960x0.jpg?height=473&width=711&fit=bounds" class="card-img-top rounded-top" alt="Sports Cars">
-                        <div class="card-body text-center">
-                            <h5 class="card-title text-primary">Sports Cars</h5>
-                            <p class="card-text text-muted">Unleash speed and performance with top-tier sports cars.</p>
-                            <a href="{{ url_for('main.display_cars') }}" class="btn btn-primary btn-lg">Explore</a>
-                        </div>
-                    </div>
+<!-- Categories Section -->
+<section class="container mb-5">
+    <h2 class="text-center mb-5">Browse by Category</h2>
+    <div class="row">
+        <div class="col-lg-3 col-md-6">
+            <div class="category-card card">
+                <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="New Cars">
+                <div class="card-body text-center">
+                    <h5 class="card-title">New Cars</h5>
+                    <p class="card-text">Latest models with cutting-edge features</p>
+                    <a href="{{ url_for('main.display_cars') }}" class="btn btn-primary">Explore</a>
                 </div>
             </div>
         </div>
-    </section>
-
-    <section class="recommended py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-5 text-dark">Recommended Cars for You</h2>
-            <div class="row">
-                <a href="{{ url_for('main.display_cars') }}" class="btn btn-primary btn-lg">Explore</a>
+        <div class="col-lg-3 col-md-6">
+            <div class="category-card card">
+                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Used Cars">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Used Cars</h5>
+                    <p class="card-text">Quality pre-owned vehicles at great prices</p>
+                    <a href="{{ url_for('main.display_cars') }}" class="btn btn-primary">Explore</a>
+                </div>
             </div>
         </div>
-    </section>
+        <div class="col-lg-3 col-md-6">
+            <div class="category-card card">
+                <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="SUVs">
+                <div class="card-body text-center">
+                    <h5 class="card-title">SUVs</h5>
+                    <p class="card-text">Spacious and powerful for every adventure</p>
+                    <a href="{{ url_for('main.display_cars') }}" class="btn btn-primary">Explore</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="category-card card">
+                <img src="https://images.unsplash.com/photo-1551830820-330a71b99659?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Electric Cars">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Electric Cars</h5>
+                    <p class="card-text">Eco-friendly vehicles for a sustainable future</p>
+                    <a href="{{ url_for('main.display_cars') }}" class="btn btn-primary">Explore</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
+<!-- Featured Cars Section -->
+<section class="featured-cars">
+    <div class="container">
+        <h2 class="text-center mb-5">Featured Cars</h2>
+        <div class="row">
+            {% for car in car_listings[:4] %}
+            <div class="col-lg-3 col-md-6">
+                <div class="car-card card">
+                    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="card-img-top" alt="{{ car.brand }} {{ car.model }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ car.brand }} {{ car.model }}</h5>
+                        <p class="card-text">
+                            <strong>Year:</strong> {{ car.year }}<br>
+                            <strong>Price:</strong> ₹{{ car.price }}<br>
+                            <strong>Mileage:</strong> {{ car.mileage }} km
+                        </p>
+                        <a href="{{ url_for('main.car_detail', car_id=car.id) }}" class="btn btn-primary w-100">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <div class="stat-number">{{ car_listings|length }}</div>
+                    <div class="stat-label">Cars Available</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Trusted Sellers</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Customer Support</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Verified Listings</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials">
+    <div class="container">
+        <h2 class="text-center mb-5">What Our Customers Say</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="testimonial-card text-center">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" class="testimonial-image" alt="Customer">
+                    <h5>Rahul Sharma</h5>
+                    <p>Found my dream car at a great price. The process was smooth and transparent.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card text-center">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" class="testimonial-image" alt="Customer">
+                    <h5>Priya Patel</h5>
+                    <p>Excellent platform for both buyers and sellers. Highly recommended!</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card text-center">
+                    <img src="https://randomuser.me/api/portraits/men/67.jpg" class="testimonial-image" alt="Customer">
+                    <h5>Amit Kumar</h5>
+                    <p>Sold my car within a week. The support team was very helpful throughout.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Bootstrap JS and Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+<!-- AOS Animation Library -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script>
+    AOS.init({
+        duration: 1000,
+        once: true
+    });
+</script>
 {% endblock %}

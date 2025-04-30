@@ -1,36 +1,397 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h2 class="text-center">Login</h2>
+<style>
+    .login-container {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .login-card {
+        background: rgba(26, 26, 26, 0.8);
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        width: 100%;
+        max-width: 1000px;
+        display: flex;
+        position: relative;
+        z-index: 1;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(212, 175, 55, 0.1);
+    }
+
+    .login-image {
+        flex: 1;
+        background: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80') center/cover;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    .login-image::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(26, 26, 26, 0.9), rgba(212, 175, 55, 0.7));
+    }
+
+    .login-image-content {
+        position: relative;
+        z-index: 1;
+        color: white;
+        text-align: center;
+    }
+
+    .login-image-content h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        color: var(--secondary-color);
+    }
+
+    .login-image-content p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+    .login-form {
+        flex: 1;
+        padding: 3rem;
+        background: rgba(26, 26, 26, 0.8);
+    }
+
+    .form-title {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .form-title h2 {
+        font-size: 2rem;
+        color: var(--secondary-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .form-title p {
+        color: #b3b3b3;
+    }
+
+    .form-floating {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-control {
+        background-color: rgba(26, 26, 26, 0.8);
+        border: 1px solid rgba(212, 175, 55, 0.2);
+        color: var(--text-color);
+        border-radius: 10px;
+        padding: 1rem;
+        height: auto;
+    }
+
+    .form-control:focus {
+        background-color: rgba(26, 26, 26, 0.9);
+        border-color: var(--secondary-color);
+        color: var(--text-color);
+        box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+    }
+
+    .form-floating > .form-control {
+        height: calc(3.5rem + 2px);
+        padding: 1rem 0.75rem;
+    }
+
+    .form-floating > label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        padding: 1rem 0.75rem;
+        pointer-events: none;
+        border: 1px solid transparent;
+        transform-origin: 0 0;
+        transition: opacity .15s ease-in-out, transform .15s ease-in-out;
+        color: #b3b3b3;
+        background-color: transparent;
+    }
+
+    .form-floating > .form-control:focus ~ label,
+    .form-floating > .form-control:not(:placeholder-shown) ~ label {
+        transform: scale(.85) translateY(-0.5rem) translateX(0.15rem);
+        color: var(--secondary-color);
+        background-color: transparent;
+    }
+
+    .form-floating > .form-control:focus,
+    .form-floating > .form-control:not(:placeholder-shown) {
+        padding-top: 1.625rem;
+        padding-bottom: 0.625rem;
+    }
+
+    .btn-login {
+        background: linear-gradient(135deg, var(--secondary-color), #c19b2e);
+        border: none;
+        border-radius: 10px;
+        padding: 1rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        transition: all 0.3s ease;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+    }
+
+    .social-login {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .social-btn {
+        flex: 1;
+        padding: 0.8rem;
+        border-radius: 10px;
+        border: 2px solid rgba(212, 175, 55, 0.2);
+        background: rgba(26, 26, 26, 0.8);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        color: var(--text-color);
+    }
+
+    .social-btn:hover {
+        border-color: var(--secondary-color);
+        transform: translateY(-2px);
+        background: rgba(26, 26, 26, 0.9);
+    }
+
+    .social-btn i {
+        font-size: 1.2rem;
+        color: var(--secondary-color);
+    }
+
+    .form-check {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-check-input:checked {
+        background-color: var(--secondary-color);
+        border-color: var(--secondary-color);
+    }
+
+    .form-check-label {
+        color: #b3b3b3;
+    }
+
+    .forgot-password {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .forgot-password a {
+        color: var(--secondary-color);
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .forgot-password a:hover {
+        color: #c19b2e;
+    }
+
+    .register-link {
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+    .register-link p {
+        color: #b3b3b3;
+    }
+
+    .register-link a {
+        color: var(--secondary-color);
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .register-link a:hover {
+        color: #c19b2e;
+    }
+
+    @media (max-width: 768px) {
+        .login-card {
+            flex-direction: column;
+        }
+        .login-image {
+            padding: 2rem 1rem;
+        }
+        .login-form {
+            padding: 2rem;
+        }
+    }
+
+    .form-control.is-invalid {
+        border-color: #dc3545;
+        background-color: rgba(220, 53, 69, 0.1);
+    }
+
+    .form-control.is-invalid:focus {
+        border-color: #dc3545;
+        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+    }
+
+    .invalid-feedback {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        padding-left: 0.5rem;
+    }
+
+    .form-control.is-valid {
+        border-color: #28a745;
+        background-color: rgba(40, 167, 69, 0.1);
+    }
+
+    .form-control.is-valid:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    }
+
+    .password-toggle {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #b3b3b3;
+        cursor: pointer;
+        padding: 0;
+    }
+
+    .password-toggle:hover {
+        color: var(--secondary-color);
+    }
+
+    .form-floating .password-toggle {
+        z-index: 2;
+    }
+</style>
+
+<div class="login-container">
+    <div class="login-card" data-aos="fade-up">
+        <div class="login-image d-none d-md-flex">
+            <div class="login-image-content">
+                <h2>Welcome Back</h2>
+                <p>Experience the luxury of premium car trading</p>
+            </div>
+        </div>
+        <div class="login-form">
+            <div class="form-title">
+                <h2>Sign In</h2>
+                <p>Access your premium account</p>
+            </div>
+            
             <form method="POST" action="{{ url_for('main.login') }}">
                 {{ form.hidden_tag() }}
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    {{ form.email(class_="form-control", id="email", placeholder="Enter your email") }}
+                
+                <div class="form-floating">
+                    {{ form.email(class="form-control", id="email", placeholder="name@example.com") }}
+                    <label for="email">Email address</label>
                     {% if form.email.errors %}
-                        <small class="text-danger">{{ form.email.errors[0] }}</small>
+                        <div class="invalid-feedback d-block">
+                            {% for error in form.email.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
                     {% endif %}
                 </div>
-                <div class="form-group mt-3">
+
+                <div class="form-floating">
+                    {{ form.password(class="form-control", id="password", placeholder="Password") }}
                     <label for="password">Password</label>
-                    {{ form.password(class_="form-control", id="password", placeholder="Enter your password") }}
+                    <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                        <i class="fas fa-eye"></i>
+                    </button>
                     {% if form.password.errors %}
-                        <small class="text-danger">{{ form.password.errors[0] }}</small>
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
                     {% endif %}
                 </div>
-                <div class="form-check mt-3">
-                    {{ form.remember(class_="form-check-input", id="remember") }}
-                    <label class="form-check-label" for="remember">Remember Me</label>
+
+                <div class="form-check">
+                    {{ form.remember(class="form-check-input", id="remember") }}
+                    <label class="form-check-label" for="remember">Remember me</label>
                 </div>
-                <button type="submit" class="btn btn-primary w-100 mt-4">{{ form.submit.label }}</button>
+
+                <button type="submit" class="btn btn-login">
+                    {{ form.submit.label }}
+                </button>
+
+                <div class="forgot-password">
+                    <a href="#">Forgot password?</a>
+                </div>
+
+                <div class="social-login">
+                    <button type="button" class="social-btn">
+                        <i class="fab fa-google"></i>
+                        <span>Google</span>
+                    </button>
+                    <button type="button" class="social-btn">
+                        <i class="fab fa-facebook-f"></i>
+                        <span>Facebook</span>
+                    </button>
+                </div>
             </form>
-            <div class="text-center mt-3">
-                <p>Don't have an account? <a href="{{ url_for('main.register') }}">Sign Up</a></p>
+
+            <div class="register-link">
+                <p>Don't have an account? <a href="{{ url_for('main.register') }}">Create one</a></p>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<!-- AOS Animation Library -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script>
+    AOS.init({
+        duration: 1000,
+        once: true
+    });
+
+    function togglePassword(inputId) {
+        const input = document.getElementById(inputId);
+        const toggle = input.nextElementSibling;
+        if (input.type === "password") {
+            input.type = "text";
+            toggle.innerHTML = '<i class="fas fa-eye-slash"></i>';
+        } else {
+            input.type = "password";
+            toggle.innerHTML = '<i class="fas fa-eye"></i>';
+        }
+    }
+</script>
 {% endblock %}

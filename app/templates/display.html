@@ -8,6 +8,8 @@
         border-radius: 15px;
         overflow: hidden;
         margin-bottom: 30px;
+        background: rgba(26, 26, 26, 0.8);
+        border: 1px solid rgba(212, 175, 55, 0.1);
     }
 
     .car-card:hover {
@@ -29,12 +31,12 @@
     .car-card .card-title {
         font-size: 1.25rem;
         font-weight: 600;
-        color: #2c3e50;
+        color: var(--secondary-color);
         margin-bottom: 1rem;
     }
 
     .car-card .card-text {
-        color: #6c757d;
+        color: #e0e0e0;
         font-size: 0.9rem;
         margin-bottom: 0.5rem;
     }
@@ -47,8 +49,8 @@
     }
 
     .car-card .spec-badge {
-        background-color: #f8f9fa;
-        color: #495057;
+        background-color: rgba(212, 175, 55, 0.1);
+        color: var(--secondary-color);
         padding: 5px 10px;
         border-radius: 20px;
         font-size: 0.8rem;
@@ -61,47 +63,70 @@
         padding: 10px;
         font-weight: 500;
         border-radius: 25px;
-        background-color: #007bff;
+        background: linear-gradient(135deg, var(--secondary-color), #c19b2e);
         border: none;
+        color: var(--primary-color);
     }
 
     .car-card .view-details-btn:hover {
-        background-color: #0056b3;
+        background: linear-gradient(135deg, #c19b2e, var(--secondary-color));
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
     }
 
     .page-header {
-        background: linear-gradient(135deg, #007bff, #00bcd4);
-        color: white;
+        background: rgba(26, 26, 26, 0.8);
+        color: #ffffff;
         padding: 3rem 0;
         margin-bottom: 3rem;
         border-radius: 0 0 20px 20px;
+        backdrop-filter: blur(10px);
     }
 
     .page-header h1 {
         font-weight: 700;
         margin-bottom: 1rem;
+        color: var(--secondary-color);
     }
 
     .page-header p {
         font-size: 1.1rem;
-        opacity: 0.9;
+        color: #e0e0e0;
     }
 
     .filter-section {
-        background-color: #f8f9fa;
+        background: rgba(26, 26, 26, 0.8);
         padding: 1.5rem;
         border-radius: 15px;
         margin-bottom: 2rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(212, 175, 55, 0.1);
     }
 
-    .filter-section .form-control {
+    .filter-section .form-control, .filter-section .form-select {
+        background: rgba(26, 26, 26, 0.8);
+        border: 1px solid rgba(212, 175, 55, 0.2);
+        color: #ffffff;
         border-radius: 25px;
         padding: 10px 20px;
+    }
+
+    .filter-section .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.7);
     }
 
     .filter-section .btn {
         border-radius: 25px;
         padding: 10px 25px;
+        background: linear-gradient(135deg, var(--secondary-color), #c19b2e);
+        border: none;
+        color: var(--primary-color);
+    }
+
+    .filter-section .btn:hover {
+        background: linear-gradient(135deg, #c19b2e, var(--secondary-color));
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
     }
 </style>
 
@@ -147,7 +172,7 @@
             {% for car in cars %}
                 <div class="col-lg-4 col-md-6">
                     <div class="card car-card">
-                        <img src="https://source.unsplash.com/random/800x600/?{{ car.make }},{{ car.model }}" class="card-img-top" alt="{{ car.make }} {{ car.model }}">
+                        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="card-img-top" alt="{{ car.make }} {{ car.model }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ car.make }} {{ car.model }}</h5>
                             <p class="card-text"><strong>Year:</strong> {{ car.year }}</p>
@@ -165,7 +190,7 @@
             {% endfor %}
         {% else %}
             <div class="col-12 text-center">
-                <div class="alert alert-info">
+                <div class="alert alert-info" style="background: rgba(26, 26, 26, 0.8); color: #e0e0e0; border: 1px solid rgba(212, 175, 55, 0.1);">
                     <h4>No cars found</h4>
                     <p>Please try adjusting your search criteria</p>
                 </div>

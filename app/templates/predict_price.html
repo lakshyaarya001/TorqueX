@@ -1,9 +1,68 @@
 {% extends "base.html" %}
 {% block content %}
+<style>
+    .prediction-card {
+        background: rgba(26, 26, 26, 0.8);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(212, 175, 55, 0.1);
+    }
+
+    .card-header {
+        background: rgba(26, 26, 26, 0.9);
+        border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    }
+
+    .card-header h3 {
+        color: var(--secondary-color);
+        font-size: 2rem;
+        margin: 0;
+    }
+
+    .form-label {
+        color: #ffffff;
+        font-weight: 500;
+    }
+
+    .form-control, .form-select {
+        background-color: rgba(26, 26, 26, 0.8);
+        border: 1px solid rgba(212, 175, 55, 0.2);
+        color: #ffffff;
+    }
+
+    .form-control:focus, .form-select:focus {
+        background-color: rgba(26, 26, 26, 0.9);
+        border-color: var(--secondary-color);
+        color: #ffffff;
+    }
+
+    .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--secondary-color), #c19b2e);
+        border: none;
+        color: var(--primary-color);
+        font-weight: 600;
+        padding: 1rem 2rem;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #c19b2e, var(--secondary-color));
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+    }
+</style>
+
 <div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="prediction-card card" data-aos="fade-up">
                 <div class="card-header">
                     <h3 class="text-center">Car Price Prediction</h3>
                 </div>

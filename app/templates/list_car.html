@@ -26,8 +26,9 @@
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
                             {{ form.model.label(class="form-label") }}
-                            {{ form.model(class="form-control", list="model-list", id="model-input") }}
-                            <datalist id="model-list"></datalist>
+                            <select class="form-select" id="model-select" name="model">
+                                <option value="">Select a model</option>
+                            </select>
                             {% if form.model.errors %}
                                 <div class="invalid-feedback d-block">
                                     {% for error in form.model.errors %}
@@ -168,10 +169,10 @@
 <script>
 document.getElementById('brand-select').addEventListener('change', function() {
     const brand = this.value;
-    const modelList = document.getElementById('model-list');
+    const modelSelect = document.getElementById('model-select');
     
     // Clear existing options
-    modelList.innerHTML = '';
+    modelSelect.innerHTML = '<option value="">Select a model</option>';
     
     if (brand) {
         // Fetch models for the selected brand
@@ -181,7 +182,8 @@ document.getElementById('brand-select').addEventListener('change', function() {
                 models.forEach(model => {
                     const option = document.createElement('option');
                     option.value = model;
-                    modelList.appendChild(option);
+                    option.textContent = model;
+                    modelSelect.appendChild(option);
                 });
             })
             .catch(error => console.error('Error fetching models:', error));
@@ -191,11 +193,12 @@ document.getElementById('brand-select').addEventListener('change', function() {
 // Validate form before submission
 document.getElementById('car-form').addEventListener('submit', function(e) {
     const brand = document.getElementById('brand-select').value;
-    const model = document.getElementById('model-input').value;
+    const model = document.getElementById('model-select').value;
     
     if (!brand || !model) {
         e.preventDefault();
         alert('Please select both brand and model');
+        return false;
     }
 });
 </script>

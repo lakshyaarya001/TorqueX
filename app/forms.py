@@ -40,10 +40,15 @@ class CarListingForm(FlaskForm):
     image_url = StringField('Image URL')
     submit = SubmitField('List Car')
 
+    def __init__(self, *args, **kwargs):
+        super(CarListingForm, self).__init__(*args, **kwargs)
+        from app.car_data import brands
+        self.brand.choices = [(brand, brand) for brand in brands]
+
     def validate_model(self, model):
-        from app import df
         if self.brand.data:
-            valid_models = df[df['Brand'] == self.brand.data]['model'].unique()
+            from app.car_data import get_models_for_brand
+            valid_models = get_models_for_brand(self.brand.data)
             if model.data not in valid_models:
                 raise ValidationError('Please select a valid model for this brand')
 
